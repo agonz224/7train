@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+
+    <!-- Moment.js Reference -->
+    <!-- <script src="http://momentjs.com/downloads/moment.js"></script>   -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+
+
+
+    <title>Welcome!</title>
+
+  
+  </head>
+  <body>
+    <h1>Interplanetary Metro</h1>
+	
+	<div class="timesheet">
+     <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Space Trips</strong></h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-hover" id='employee-table'>
+                <thead>
+                  <tr>
+                    <th>Rocket</th>
+                    <th>Destination</th>
+                    <th>Arrival</th>
+                    <th>Frequency</th>
+                    <th>Next Trip</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Rocket Bay</strong></h3>
+            </div>
+            <div class="panel-body">
+
+              <!-- Entry Form -->
+              <form>
+                <div class="form-group">
+                  <label for="employee-name-input">Rocket</label>
+                  <input class="form-control" id="employee-name-input" type="text">
+                </div>
+                <div class="form-group">
+                  <label for="role-input">Destination</label>
+                  <input class="form-control" id="role-input" type="text">
+                </div>
+                <div class="form-group">
+                  <label for="start-input">Arrival</label>
+                  <input class="form-control" id="start-input" type="text">
+                </div>
+                <div class="form-group">
+                  <label for="rate-input">Frequency</label>
+                  <input class="form-control" id="rate-input" type="text">
+                </div>
+                <button class="btn btn-danger" id="add-employee-btn" type="submit">Add Rocket</button>
+              </form>
+              </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="assets/js/train.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+  </body>
+</html>

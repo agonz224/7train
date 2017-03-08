@@ -1,0 +1,36 @@
+h1 {
+	color: white;
+	text-align: center;
+	font-family: 'Audiowide', cursive;
+	font-size: 80px;
+	position: relative;
+	top: 75px;
+
+}
+
+th,
+label,
+td,
+h3,
+button{
+	color: pink;
+	text-align: center;
+	font-family: 'Audiowide', cursive;
+}
+
+html {
+	background-image: url(../images/orange.jpg)
+}
+
+.timesheet {
+	
+	position: relative;
+	top: 175px;
+	margin: auto;
+	text-align: center;
+	width: 900px;
+}
+
+body {
+	background-color: transparent;
+}
