@@ -1,14 +1,5 @@
-/* global firebase moment */
-// Steps to complete:
 
-// 1. Initialize Firebase
-// 2. Create button for adding new employees - then update the html + update the database
-// 3. Create a way to retrieve employees from the employee database.
-// 4. Create a way to calculate the months worked. Using difference between start and current time.
-//    Then use moment.js formatting to set difference in months.
-// 5. Calculate Total billed
-
-// 1. Initialize Firebase
+// initialize firebase
   var config = {
     apiKey: "AIzaSyC7Q5yxv1FkVIvF7KAMCqBjQktFNqIKDd4",
     authDomain: "class-f048a.firebaseapp.com",
@@ -20,17 +11,17 @@
 
 var database = firebase.database();
 
-// 2. Button for adding Employees
+// launch button on click event
 $("#add-rocket-btn").on("click", function(event) {
   event.preventDefault();
 
   // Grabs user input
   var rName = $("#rocket-name-input").val().trim();
   var rDes = $("#destination-input").val().trim();
-  var rArr = moment($("#arrival-input").val().trim(), "DD/MM/YY").format("X");
+  var rArr = moment($("#arrival-input").val().trim(), "hh:mm").format("X");
   var rFreq = $("#frequency-input").val().trim();
 
-  // Creates local "temporary" object for holding employee data
+  // object holds new launch info
   var newLaunch = {
     rocket: rName,
     destination: rDes,
@@ -38,7 +29,7 @@ $("#add-rocket-btn").on("click", function(event) {
     frequency: rFreq
   };
 
-  // Uploads employee data to the database
+  // push object to firebase database
   database.ref().push(newLaunch);
 
   // Logs everything to console
@@ -47,7 +38,7 @@ $("#add-rocket-btn").on("click", function(event) {
   console.log(newLaunch.arrival);
   console.log(newLaunch.frequency);
 
-  // Alert
+  // alert and prompt
   alert("New Launch Scheduled");
   var spaceEats = prompt("What would you like to have during your launch?")
   alert(spaceEats + " " + "will be provided")
@@ -62,7 +53,7 @@ $("#add-rocket-btn").on("click", function(event) {
   return false;
 });
 
-// 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
+// adds new launch to firebase database and appends new launch info to table
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
   console.log(childSnapshot.val());
@@ -79,27 +70,37 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   console.log(rArr);
   console.log(rFreq);
 
-  // Prettify the employee start
-  var empStartPretty = moment.unix(rArr).format("MM/DD/YY");
+   var rocketInterval = 3;
 
-  // Calculate the months worked using hardcore math
-  // To calculate the months worked
-  var empMonths = moment().diff(moment.unix(rArr, "X"), "months");
-  console.log(empMonths);
+    // Time is 3:30 AM
+    var firstTime = "03:30";
 
-  // Calculate the total billed rate
-  var empBilled = empMonths * rFreq;
-  console.log(empBilled);
+    // First Time (pushed back 1 year to make sure it comes before current time)
+    var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
 
-  // Add each train's data into the table
+    // Current Time
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    // Difference between the times
+    var diffTime = moment().diff(firstTimeConverted, "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time apart (remainder)
+    var rRemainder = diffTime % rocketInterval;
+    console.log(rRemainder);
+
+    // Minute Until Train
+    var minsAway = rFreq - rRemainder;
+    console.log("MINUTES TILL TRAIN: " + minsAway);
+
+    // Next Train
+    var nextLaunch = moment().add(minsAway, "minutes");
+    console.log("ARRIVAL TIME: " + nextLaunch.format("hh:mm"));
+
+  // new rocket appended along wlith its own new row to table
   $("#rocket-table > tbody").append("<tr><td>" + rName + "</td><td>" + rDes + "</td><td>" +
-  rArr + "</td><td>" + rFreq + "</td><td>");
+  rFreq + "</td><td>" + nextLaunch.format("hh:mm") + "</td><td>" + minsAway + "</td><td>");
 });
-
-// Example Time Math
-// -----------------------------------------------------------------------------
-// Assume Employee start date of January 1, 2015
-// Assume current date is March 1, 2016
-
-// We know that this is 15 months.
-// Now we will create code in moment.js to confirm that any attempt we use mets this test case
+ 
