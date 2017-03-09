@@ -21,40 +21,42 @@
 var database = firebase.database();
 
 // 2. Button for adding Employees
-$("#add-employee-btn").on("click", function(event) {
+$("#add-rocket-btn").on("click", function(event) {
   event.preventDefault();
 
   // Grabs user input
-  var empName = $("#employee-name-input").val().trim();
-  var empRole = $("#role-input").val().trim();
-  var empStart = moment($("#start-input").val().trim(), "DD/MM/YY").format("X");
-  var empRate = $("#rate-input").val().trim();
+  var rName = $("#rocket-name-input").val().trim();
+  var rDes = $("#destination-input").val().trim();
+  var rArr = moment($("#arrival-input").val().trim(), "DD/MM/YY").format("X");
+  var rFreq = $("#frequency-input").val().trim();
 
   // Creates local "temporary" object for holding employee data
-  var newEmp = {
-    name: empName,
-    role: empRole,
-    start: empStart,
-    rate: empRate
+  var newLaunch = {
+    rocket: rName,
+    destination: rDes,
+    arrival: rArr,
+    frequency: rFreq
   };
 
   // Uploads employee data to the database
-  database.ref().push(newEmp);
+  database.ref().push(newLaunch);
 
   // Logs everything to console
-  console.log(newEmp.name);
-  console.log(newEmp.role);
-  console.log(newEmp.start);
-  console.log(newEmp.rate);
+  console.log(newLaunch.rocket);
+  console.log(newLaunch.destination);
+  console.log(newLaunch.arrival);
+  console.log(newLaunch.frequency);
 
   // Alert
-  alert("Employee successfully added");
+  alert("New Launch Scheduled");
+  var spaceEats = prompt("What would you like to have during your launch?")
+  alert(spaceEats + " " + "will be provided")
 
   // Clears all of the text-boxes
-  $("#employee-name-input").val("");
-  $("#role-input").val("");
-  $("#start-input").val("");
-  $("#rate-input").val("");
+  $("#rocket-name-input").val("");
+  $("#destination-input").val("");
+  $("#arrival-input").val("");
+  $("#frequency-input").val("");
 
   // Prevents moving to new page
   return false;
@@ -66,32 +68,32 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   console.log(childSnapshot.val());
 
   // Store everything into a variable.
-  var empName = childSnapshot.val().name;
-  var empRole = childSnapshot.val().role;
-  var empStart = childSnapshot.val().start;
-  var empRate = childSnapshot.val().rate;
+  var rName = childSnapshot.val().rocket;
+  var rDes = childSnapshot.val().destination;
+  var rArr = childSnapshot.val().arrival;
+  var rFreq = childSnapshot.val().frequency;
 
   // Employee Info
-  console.log(empName);
-  console.log(empRole);
-  console.log(empStart);
-  console.log(empRate);
+  console.log(rName);
+  console.log(rDes);
+  console.log(rArr);
+  console.log(rFreq);
 
   // Prettify the employee start
-  var empStartPretty = moment.unix(empStart).format("MM/DD/YY");
+  var empStartPretty = moment.unix(rArr).format("MM/DD/YY");
 
   // Calculate the months worked using hardcore math
   // To calculate the months worked
-  var empMonths = moment().diff(moment.unix(empStart, "X"), "months");
+  var empMonths = moment().diff(moment.unix(rArr, "X"), "months");
   console.log(empMonths);
 
   // Calculate the total billed rate
-  var empBilled = empMonths * empRate;
+  var empBilled = empMonths * rFreq;
   console.log(empBilled);
 
   // Add each train's data into the table
-  $("#employee-table > tbody").append("<tr><td>" + empName + "</td><td>" + empRole + "</td><td>" +
-  empStartPretty + "</td><td>" + empMonths + "</td><td>" + empRate + "</td><td>" + empBilled + "</td></tr>");
+  $("#rocket-table > tbody").append("<tr><td>" + rName + "</td><td>" + rDes + "</td><td>" +
+  rArr + "</td><td>" + rFreq + "</td><td>");
 });
 
 // Example Time Math
